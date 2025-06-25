@@ -21,47 +21,86 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('LOGIN FORM')),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 50.0, right: 20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Email
-            Text("Email:", style: TextStyle(fontSize: 16)),
-            SizedBox(height: 5),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter email',
+      // AppBar with no title for cleaner layout
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(30, 60, 30, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Logo centered
+              Center(
+                child: Column(
+                  children: [
+                    // Placeholder for logo image (use your actual asset in real app)
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blue[100],
+                      ),
+                      child: Icon(
+                        Icons.person,
+                        size: 60,
+                        color: Colors.blue[800],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Login to RiceTrax',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20),
 
-            // Password
-            Text("Password:", style: TextStyle(fontSize: 16)),
-            SizedBox(height: 5),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter password',
+              // Email
+              Text("Email:", style: TextStyle(fontSize: 16)),
+              SizedBox(height: 5),
+              TextField(
+                controller: _emailController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter email',
+                ),
               ),
-            ),
-            SizedBox(height: 30),
+              SizedBox(height: 20),
 
-            // Login Button
-            ElevatedButton(
-              onPressed: () {
-                String email = _emailController.text;
-                String password = _passwordController.text;
-                print("Logging in: $email / $password");
-              },
-              child: Text('Login'),
-            ),
-          ],
+              // Password
+              Text("Password:", style: TextStyle(fontSize: 16)),
+              SizedBox(height: 5),
+              TextField(
+                controller: _passwordController,
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter password',
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // Login Button centered
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    String email = _emailController.text;
+                    String password = _passwordController.text;
+                    print("Logging in: $email / $password");
+                  },
+                  child: Text('Login'),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 15.0),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
