@@ -237,7 +237,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Change password'),
+        title: Text('Change Password'),
         backgroundColor: Colors.amber[700],
       ),
       body: Padding(
