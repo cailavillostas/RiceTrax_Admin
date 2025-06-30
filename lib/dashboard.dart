@@ -109,6 +109,7 @@ class Dashboard extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.black),
       ),
+
       onTap: () {
         Navigator.of(context).pop();
       },
