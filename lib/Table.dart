@@ -112,7 +112,6 @@ class RiceStock extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: isHeader ? Colors.grey[300] : Colors.white,
                       ),
-
                       children: row.map((cell) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
