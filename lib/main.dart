@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dashboard.dart'; // Optional: Only if you're using it later
-import 'Table.dart';     // Make sure this file contains RiceStock class
+import 'package:rice_trax/Dashboard.dart';
+import 'package:rice_trax/RiceStock.dart';
 
 void main() {
   runApp(RiceTraxApp());
@@ -10,9 +10,8 @@ class RiceTraxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: Dashboard(),
       debugShowCheckedModeBanner: false,
-      title: 'RiceTrax',
-      home: RiceStock(), // 👈 Set this as the home screen
     );
   }
 }
