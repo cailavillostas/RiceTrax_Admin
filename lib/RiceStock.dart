@@ -124,6 +124,7 @@ class RiceStock extends StatelessWidget {
                     children: data.map((row) {
                       bool isHeader = row == data.first;
 
+
                       Color? rowColor;
                       if (!isHeader) {
                         String status = row[4];
