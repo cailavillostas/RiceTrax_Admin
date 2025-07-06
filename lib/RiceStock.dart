@@ -8,6 +8,19 @@ class RiceStock extends StatelessWidget {
     ['Jasmin', '40', '10', '₱55', 'In Stock'],
     ['Angelika', '30', '10', '₱56', 'Low Stock'],
     ['Sinandomeng', '0', '9', '₱54', 'Out of Stock'],
+    ['Malagkit', '25', '5', '₱62', 'Low Stock'],
+    ['Intan', '0', '12', '₱57', 'Out of Stock'],
+    ['Blue Dragon', '12', '3', '₱60', 'Low Stock'],
+    ['Golden Queen', '65', '20', '₱61', 'In Stock'],
+    ['Red Rice', '0', '7', '₱66', 'Out of Stock'],
+    ['Black Rice', '18', '8', '₱70', 'Low Stock'],
+    ['Organic Brown', '22', '4', '₱64', 'In Stock'],
+    ['Japanese Rice', '55', '15', '₱72', 'In Stock'],
+    ['Basmati', '35', '10', '₱75', 'In Stock'],
+    ['Well-Milled Rice', '29', '13', '₱59', 'Low Stock'],
+    ['Milagrosa', '60', '11', '₱60', 'In Stock'],
+    ['Sugod', '28', '6', '₱63', 'Low Stock'],
+    ['Macan', '0', '5', '₱53', 'Out of Stock'],
   ];
 
   @override
@@ -39,7 +52,7 @@ class RiceStock extends StatelessWidget {
         children: [
           // 🔶 Low Stock Card
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8.0),
             child: Card(
               color: Colors.orange[100],
               elevation: 4,
@@ -69,7 +82,7 @@ class RiceStock extends StatelessWidget {
 
           // 🔴 Out of Stock Card
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8.0),
             child: Card(
               color: Colors.red[100],
               elevation: 4,
@@ -101,33 +114,47 @@ class RiceStock extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Table(
-                  border: TableBorder.all(color: Colors.black, width: 1),
-                  defaultColumnWidth: FixedColumnWidth(120),
-                  children: data.map((row) {
-                    bool isHeader = row == data.first;
-                    return TableRow(
-                      decoration: BoxDecoration(
-                        color: isHeader ? Colors.grey[300] : Colors.white,
-                      ),
-                      children: row.map((cell) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            cell,
-                            style: TextStyle(
-                              fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-                              fontSize: 14,
-                              color: Colors.black, // Always black
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Table(
+                    border: TableBorder.all(color: Colors.black, width: 1),
+                    defaultColumnWidth: FixedColumnWidth(120),
+                    children: data.map((row) {
+                      bool isHeader = row == data.first;
+
+                      Color? rowColor;
+                      if (!isHeader) {
+                        String status = row[4];
+                        if (status == 'Low Stock') {
+                          rowColor = Colors.orange[100];
+                        } else if (status == 'Out of Stock') {
+                          rowColor = Colors.red[100];
+                        }
+                      }
+
+                      return TableRow(
+                        decoration: BoxDecoration(
+                          color: isHeader ? Colors.grey[300] : rowColor,
+                        ),
+                        children: row.map((cell) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              cell,
+                              style: TextStyle(
+                                fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }).toList(),
+                          );
+                        }).toList(),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ),
