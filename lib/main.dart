@@ -10,7 +10,7 @@ class RiceTraxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: RiceStock(),
+      home: Dashboard(),
       debugShowCheckedModeBanner: false,
     );
   }
