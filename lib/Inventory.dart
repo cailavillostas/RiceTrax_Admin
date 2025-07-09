@@ -39,6 +39,7 @@ class _InventoryState extends State<Inventory> {
     }
   }
 
+
   Icon getIcon() {
     return Icon(Icons.warehouse, color: Colors.green[800], size: 28);
   }
