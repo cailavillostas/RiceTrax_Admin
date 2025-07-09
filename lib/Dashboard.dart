@@ -3,7 +3,21 @@ import 'package:fl_chart/fl_chart.dart';
 import 'RiceStock.dart';
 import 'Inventory.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
+  @override
+  _DashboardState createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  int selectedCardIndex = -1;
+  int touchedIndex = -1;
+
+  void onCardTap(int index) {
+    setState(() {
+      selectedCardIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,21 +28,16 @@ class Dashboard extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.green[900],
-                ),
+                decoration: BoxDecoration(color: Colors.green[900]),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'RiceTrax',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Icon(Icons.menu, color: Colors.white), // static icon
+                    Text('RiceTrax',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold)),
+                    Icon(Icons.menu, color: Colors.white),
                   ],
                 ),
               ),
@@ -37,10 +46,8 @@ class Dashboard extends StatelessWidget {
                 title: 'Dashboard',
                 context: context,
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dashboard()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Dashboard()));
                 },
               ),
               _buildDrawerItem(
@@ -48,10 +55,8 @@ class Dashboard extends StatelessWidget {
                 title: 'Rice Inventory Stock',
                 context: context,
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => RiceStock()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => RiceStock()));
                 },
               ),
               _buildDrawerItem(
@@ -59,26 +64,31 @@ class Dashboard extends StatelessWidget {
                 title: 'Inventory',
                 context: context,
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Inventory()),
-                  );
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Inventory()));
                 },
               ),
-              _buildDrawerItem(icon: Icons.attach_money, title: 'Sales', context: context),
-              _buildDrawerItem(icon: Icons.notifications, title: 'Notifications', context: context),
-              _buildDrawerItem(icon: Icons.settings, title: 'Settings', context: context),
-              _buildDrawerItem(icon: Icons.logout, title: 'Logout', context: context),
+              _buildDrawerItem(
+                  icon: Icons.attach_money,
+                  title: 'Sales',
+                  context: context),
+              _buildDrawerItem(
+                  icon: Icons.notifications,
+                  title: 'Notifications',
+                  context: context),
+              _buildDrawerItem(
+                  icon: Icons.settings, title: 'Settings', context: context),
+              _buildDrawerItem(
+                  icon: Icons.logout, title: 'Logout', context: context),
             ],
           ),
         ),
       ),
       appBar: AppBar(
         backgroundColor: Colors.green[800],
-        title: Text(
-          'RiceTrax',
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-        ),
+        title: Text('RiceTrax',
+            style:
+            TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
@@ -89,71 +99,55 @@ class Dashboard extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.all(16),
         children: [
-          Text(
-            'Dashboard',
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.green[800],
-            ),
-          ),
+          Text('Dashboard',
+              style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[800])),
           SizedBox(height: 16),
-
           _buildDashboardCard(
-            icon: Icons.attach_money,
-            title: 'Total Sales Today',
-            value: '₱ 15,400',
-          ),
+              icon: Icons.attach_money,
+              title: 'Total Sales Today',
+              value: '₱ 15,400',
+              index: 0),
           SizedBox(height: 16),
-
           _buildDashboardCard(
-            icon: Icons.inventory_2,
-            title: 'Total Stock (sacks)',
-            value: '930',
-          ),
+              icon: Icons.inventory_2,
+              title: 'Total Stock (sacks)',
+              value: '930',
+              index: 1),
           SizedBox(height: 16),
-
           _buildDashboardCard(
-            icon: Icons.shopping_cart,
-            title: 'Sold Stocks (sacks)',
-            value: '250',
-          ),
+              icon: Icons.shopping_cart,
+              title: 'Sold Stocks (sacks)',
+              value: '250',
+              index: 2),
           SizedBox(height: 16),
-
           _buildDashboardCard(
-            icon: Icons.warning,
-            title: 'Low Stocks',
-            value: '1 item',
-          ),
+              icon: Icons.warning,
+              title: 'Low Stocks',
+              value: '1 item',
+              index: 3),
           SizedBox(height: 24),
-
           _buildSectionTitle('Inventory Breakdown (sacks)'),
           SizedBox(height: 200, child: _buildPieChart()),
           SizedBox(height: 24),
-
           _buildSectionTitle('Monthly Sales (₱)'),
           SizedBox(height: 200, child: _buildBarChart()),
-
           SizedBox(height: 24),
-
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RiceStock()),
-              ),
+                  context, MaterialPageRoute(builder: (context) => RiceStock())),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[800],
                 padding: EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                    borderRadius: BorderRadius.circular(12)),
               ),
-              child: Text(
-                'View Rice Inventory Stock',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
+              child: Text('View Rice Inventory Stock',
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
             ),
           ),
         ],
@@ -178,87 +172,106 @@ class Dashboard extends StatelessWidget {
     required IconData icon,
     required String title,
     required String value,
+    required int index,
   }) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: Offset(0, 2),
+    final isSelected = selectedCardIndex == index;
+
+    return GestureDetector(
+      onTap: () => onCardTap(index),
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 300),
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.green[50] : Colors.white,
+          border: Border.all(
+            color: isSelected ? Colors.green : Colors.transparent,
+            width: 2,
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              offset: Offset(0, 2),
             ),
-            child: Icon(icon, color: Colors.green[800], size: 28),
-          ),
-          SizedBox(width: 16),
-          Expanded(
-            child: Column(
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: Colors.green[800], size: 28),
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                Text(title, style: TextStyle(fontSize: 16, color: Colors.green[800])),
-            SizedBox(height: 8),
-              Text(
-                value,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green[800],
-                ),
+                  Text(title,
+                      style:
+                      TextStyle(fontSize: 16, color: Colors.green[800])),
+                  SizedBox(height: 8),
+                  Text(value,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green[800])),
+                ],
               ),
-              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: Colors.green[800],
-      ),
-    );
+    return Text(title,
+        style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.green[800]));
   }
 
   Widget _buildPieChart() {
+    final pieData = [
+      {'value': 400.0, 'title': '400', 'color': Colors.green[800]},
+      {'value': 300.0, 'title': '300', 'color': Colors.green[400]},
+      {'value': 80.0, 'title': '80', 'color': Colors.green[200]},
+    ];
+
     return PieChart(
       PieChartData(
-        sections: [
-          PieChartSectionData(
-            value: 400,
-            title: '400',
-            color: Colors.green[800],
-            radius: 60,
-          ),
-          PieChartSectionData(
-            value: 300,
-            title: '300',
-            color: Colors.green[400],
-            radius: 60,
-          ),
-          PieChartSectionData(
-            value: 80,
-            title: '80',
-            color: Colors.green[200],
-            radius: 60,
-          ),
-        ],
+        pieTouchData: PieTouchData(
+          touchCallback: (event, response) {
+            setState(() {
+              if (!event.isInterestedForInteractions ||
+                  response == null ||
+                  response.touchedSection == null) {
+                touchedIndex = -1;
+              } else {
+                touchedIndex = response.touchedSection!.touchedSectionIndex;
+              }
+            });
+          },
+        ),
+        sections: List.generate(pieData.length, (i) {
+          final isTouched = i == touchedIndex;
+          final radius = isTouched ? 80.0 : 60.0;
+
+          return PieChartSectionData(
+            value: pieData[i]['value'] as double,
+            title: pieData[i]['title'] as String,
+            color: pieData[i]['color'] as Color,
+            radius: radius,
+            titleStyle: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          );
+        }),
         sectionsSpace: 2,
         centerSpaceRadius: 0,
       ),
@@ -268,6 +281,23 @@ class Dashboard extends StatelessWidget {
   Widget _buildBarChart() {
     return BarChart(
       BarChartData(
+        barTouchData: BarTouchData(
+          enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Colors.white,
+            tooltipPadding: const EdgeInsets.all(8),
+            tooltipRoundedRadius: 8,
+            getTooltipItem: (group, groupIndex, rod, rodIndex) {
+              return BarTooltipItem(
+                '₱ ${rod.toY.toInt()}',
+                const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
+          ),
+        ),
         borderData: FlBorderData(show: false),
         titlesData: FlTitlesData(
           bottomTitles: AxisTitles(
@@ -285,19 +315,27 @@ class Dashboard extends StatelessWidget {
             sideTitles: SideTitles(
               showTitles: true,
               reservedSize: 28,
-              getTitlesWidget: (value, _) => Text(
-                '${value.toInt()}',
-                style: TextStyle(fontSize: 10, color: Colors.green[800]),
-              ),
+              getTitlesWidget: (value, _) => Text('${value.toInt()}',
+                  style: TextStyle(fontSize: 10, color: Colors.green[800])),
             ),
           ),
         ),
         barGroups: [
-          BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 400, color: Colors.green[800])]),
-          BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
-          BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 500, color: Colors.green[800])]),
-          BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 200, color: Colors.green[800])]),
-          BarChartGroupData(x: 4, barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
+          BarChartGroupData(
+              x: 0,
+              barRods: [BarChartRodData(toY: 400, color: Colors.green[800])]),
+          BarChartGroupData(
+              x: 1,
+              barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
+          BarChartGroupData(
+              x: 2,
+              barRods: [BarChartRodData(toY: 500, color: Colors.green[800])]),
+          BarChartGroupData(
+              x: 3,
+              barRods: [BarChartRodData(toY: 200, color: Colors.green[800])]),
+          BarChartGroupData(
+              x: 4,
+              barRods: [BarChartRodData(toY: 300, color: Colors.green[800])]),
         ],
       ),
     );
