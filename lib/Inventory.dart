@@ -333,6 +333,7 @@ class RiceDetailsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: color),
       ),
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
