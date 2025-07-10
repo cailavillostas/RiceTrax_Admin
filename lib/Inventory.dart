@@ -50,55 +50,70 @@ class _InventoryState extends State<Inventory> {
     TextEditingController _stockController =
     TextEditingController(text: riceData[index]['stock'].toString());
 
-
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
-          child: Container(
-            width: 300,
-            height: 300,
-            child: Material(
-              borderRadius: BorderRadius.circular(12),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Edit Brand ',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16),
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Brand Name',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    TextField(
-                      controller: _stockController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: 'Stock',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text('Update'),
-                      ),
-                    ),
-                  ],
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Text('Edit Brand'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Brand Name',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-              ),
+                SizedBox(height: 12),
+                TextField(
+                  controller: _stockController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Stock Quantity',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ],
             ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              style: TextButton.styleFrom(foregroundColor: Colors.red),
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                String newName = _nameController.text.trim();
+                int? newStock = int.tryParse(_stockController.text.trim());
+
+                if (newName.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Brand name cannot be empty.')),
+                  );
+                  return;
+                }
+
+                if (newStock == null || newStock < 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please enter a valid stock quantity.')),
+                  );
+                  return;
+                }
+
+                setState(() {
+                  riceData[index]['name'] = newName;
+                  riceData[index]['stock'] = newStock;
+                });
+
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green[400]),
+              child: Text('Save'),
+            ),
+          ],
         );
       },
     );
@@ -146,13 +161,14 @@ class _InventoryState extends State<Inventory> {
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       style: TextButton.styleFrom(
+                        foregroundColor: Colors.red,
                         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                           side: BorderSide(color: Colors.grey.shade400),
                         ),
                       ),
-                      child: Text('Cancel', style: TextStyle(color: Colors.black)),
+                      child: Text('Cancel'),
                     ),
                     SizedBox(width: 10),
                     ElevatedButton(
@@ -160,12 +176,25 @@ class _InventoryState extends State<Inventory> {
                         String name = _nameController.text.trim();
                         int stock = int.tryParse(_stockController.text.trim()) ?? 0;
 
-                        if (name.isNotEmpty) {
-                          setState(() {
-                            riceData.add({'name': name, 'stock': stock});
-                          });
-                          Navigator.pop(context);
+                        if (name.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Brand name cannot be empty.')),
+                          );
+                          return;
                         }
+
+                        if (stock < 0) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Stock must be zero or more.')),
+                          );
+                          return;
+                        }
+
+                        setState(() {
+                          riceData.insert(0, {'name': name, 'stock': stock});
+                        });
+
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green[700],
@@ -201,7 +230,8 @@ class _InventoryState extends State<Inventory> {
               });
               Navigator.pop(context);
             },
-            child: Text('Delete'),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text('Delete', style: TextStyle(color: Colors.white)),
           ),
         ],
       ),
@@ -300,54 +330,60 @@ class _InventoryState extends State<Inventory> {
                           child: Padding(
                             padding: EdgeInsets.all(16),
                             child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                            Row(
-                            children: [
-                            Container(
-                            padding: EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.green.shade50,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: getIcon(),
-                          ),
-                          SizedBox(width: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                              SizedBox(height: 4),
-                              Text('${item['stock']} sacks'),
-                              SizedBox(height: 4),
-                              Container(
-                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  color: getBadgeColor(status),
-                                  borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Text(status, style: TextStyle(fontSize: 12)),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        color: Colors.green.shade50,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: getIcon(),
+                                    ),
+                                    SizedBox(width: 16),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                        SizedBox(height: 4),
+                                        Text('${item['stock']} sacks'),
+                                        SizedBox(height: 4),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: getBadgeColor(status),
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Text(status, style: TextStyle(fontSize: 12)),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                ],
-                              ),
-                            ],
+                                Row(
+                                  children: [
+                                    Tooltip(
+                                      message: 'Edit Brand',
+                                      child: IconButton(
+                                        icon: Icon(Icons.edit, color: Colors.green),
+                                        onPressed: () => _showEditForm(context, index),
+                                      ),
+                                    ),
+                                    Tooltip(
+                                      message: 'Delete Brand',
+                                      child: IconButton(
+                                        icon: Icon(Icons.delete, color: Colors.redAccent),
+                                        onPressed: () => _deleteBrand(index),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.edit, color: Colors.green),
-                                onPressed: () => _showEditForm(context, index),
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.delete, color: Colors.redAccent),
-                                onPressed: () => _deleteBrand(index),
-                              ),
-                            ],
-                          ),
-                          ],
                         ),
-                      ),
-                      ),
                       );
                     },
                   ),
@@ -356,8 +392,6 @@ class _InventoryState extends State<Inventory> {
               ],
             ),
           ),
-
-          // ✅ Centered Add Brand Button
           Positioned(
             bottom: 20,
             left: 0,
