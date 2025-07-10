@@ -324,6 +324,7 @@ class RiceDetailsPage extends StatelessWidget {
     );
   }
 
+
   Widget _buildInfoCard(String label, String value, Color color) {
     return Container(
       width: 180,
