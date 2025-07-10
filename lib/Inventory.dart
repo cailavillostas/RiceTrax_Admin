@@ -8,6 +8,7 @@ class Inventory extends StatefulWidget {
   _InventoryState createState() => _InventoryState();
 }
 
+
 class _InventoryState extends State<Inventory> {
   List<Map<String, dynamic>> riceData = [
     {'name': 'Dinorado', 'stock': 50},
