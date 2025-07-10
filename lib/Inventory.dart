@@ -50,6 +50,7 @@ class _InventoryState extends State<Inventory> {
     TextEditingController _stockController =
     TextEditingController(text: riceData[index]['stock'].toString());
 
+
     showDialog(
       context: context,
       builder: (context) {
