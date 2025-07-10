@@ -39,7 +39,6 @@ class _InventoryState extends State<Inventory> {
     }
   }
 
-
   Icon getIcon() {
     return Icon(Icons.warehouse, color: Colors.green[800], size: 28);
   }
@@ -127,20 +126,24 @@ class _InventoryState extends State<Inventory> {
                             SizedBox(width: 16),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
                                   Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                  SizedBox(height: 4),
-                                  Text('${item['stock']} sacks', style: TextStyle(fontSize: 14)),
-                                  SizedBox(height: 8),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                    decoration: BoxDecoration(
-                                      color: getBadgeColor(status),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Text(status, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                              SizedBox(height: 4),
+                              Text('${item['stock']} sacks', style: TextStyle(fontSize: 14)),
+                              SizedBox(height:8) , // Fixed height here
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                  decoration: BoxDecoration(
+                                    color: getBadgeColor(status),
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
+                                  child: Text(
+                                    status,
+                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+
                                 ],
                               ),
                             ),
@@ -215,6 +218,30 @@ class RiceDetailsPage extends StatelessWidget {
         'stock': 60,
         'sold': 20,
         'price': 1900,
+        'transactions': [
+          {'id': 'J001', 'date': '2025-05-03', 'qty': 10, 'price': 47},
+        ],
+      },
+      'Well-Milled': {
+        'stock': 60,
+        'sold': 20,
+        'price': 1300,
+        'transactions': [
+          {'id': 'J001', 'date': '2025-05-03', 'qty': 10, 'price': 47},
+        ],
+      },
+      'Premium': {
+        'stock': 60,
+        'sold': 20,
+        'price': 1120,
+        'transactions': [
+          {'id': 'J001', 'date': '2025-05-03', 'qty': 10, 'price': 47},
+        ],
+      },
+      'Brown Rice': {
+        'stock': 60,
+        'sold': 20,
+        'price': 1200,
         'transactions': [
           {'id': 'J001', 'date': '2025-05-03', 'qty': 10, 'price': 47},
         ],
