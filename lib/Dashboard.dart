@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:rice_trax/Notifications.dart';
+import 'NotificationsPage.dart';
 import 'RiceStock.dart';
 import 'Inventory.dart';
 import 'Sales.dart';
-import 'Notifications.dart';
 import 'Settings.dart';
 import 'Supplier.dart';
 
@@ -62,7 +61,7 @@ class _DashboardState extends State<Dashboard> {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Sales()));
               }),
               _buildDrawerItem(icon: Icons.notifications, title: 'Notification', context: context, onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Notifications()));
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NotificationsPage()));
               }),
               _buildDrawerItem(icon: Icons.settings, title: 'Settings', context: context, onTap: () {
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Settings()));
