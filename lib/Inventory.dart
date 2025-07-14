@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'Dashboard.dart';
+import 'NotificationsPage.dart';
 import 'RiceStock.dart';
+import 'Supplier.dart';
+import 'Sales.dart';
 import 'RiceDetailsPage.dart';
 
 class Inventory extends StatefulWidget {
   @override
   _InventoryState createState() => _InventoryState();
 }
-
 
 class _InventoryState extends State<Inventory> {
   List<Map<String, dynamic>> riceData = [
@@ -243,12 +245,16 @@ class _InventoryState extends State<Inventory> {
     required IconData icon,
     required String title,
     required BuildContext context,
-    VoidCallback? onTap,
+    Widget? page,
   }) {
     return ListTile(
       leading: Icon(icon, color: Colors.white),
       title: Text(title, style: TextStyle(color: Colors.white)),
-      onTap: onTap,
+      onTap: page != null
+          ? () {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => page));
+      }
+          : null,
     );
   }
 
@@ -272,17 +278,22 @@ class _InventoryState extends State<Inventory> {
                   ],
                 ),
               ),
-              _buildDrawerItem(icon: Icons.dashboard, title: 'Dashboard', context: context, onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => Dashboard()));
-              }),
-              _buildDrawerItem(icon: Icons.inventory, title: 'Rice Inventory Stock', context: context, onTap: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => RiceStock()));
-              }),
-              _buildDrawerItem(icon: Icons.list_alt, title: 'Inventory', context: context),
-              _buildDrawerItem(icon: Icons.attach_money, title: 'Sales', context: context),
-              _buildDrawerItem(icon: Icons.notifications, title: 'Notifications', context: context),
-              _buildDrawerItem(icon: Icons.settings, title: 'Settings', context: context),
-              _buildDrawerItem(icon: Icons.logout, title: 'Logout', context: context),
+              _buildDrawerItem(icon: Icons.dashboard, title: 'Dashboard', context: context, page: Dashboard()),
+              _buildDrawerItem(icon: Icons.inventory, title: 'Rice Inventory Stock', context: context, page: RiceStock()),
+              _buildDrawerItem(icon: Icons.list_alt, title: 'Inventory', context: context, page: Inventory()),
+              _buildDrawerItem(icon: Icons.person, title: 'Supplier', context: context, page: SupplierPage()),
+              _buildDrawerItem(icon: Icons.attach_money, title: 'Sales', context: context, page: Sales()),
+              _buildDrawerItem(icon: Icons.notifications, title: 'Notifications', context: context, page: NotificationsPage()),
+              ListTile(
+                leading: Icon(Icons.settings, color: Colors.white),
+                title: Text('Settings', style: TextStyle(color: Colors.white)),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: Icon(Icons.logout, color: Colors.white),
+                title: Text('Logout', style: TextStyle(color: Colors.white)),
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -331,60 +342,60 @@ class _InventoryState extends State<Inventory> {
                           child: Padding(
                             padding: EdgeInsets.all(16),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        color: Colors.green.shade50,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: getIcon(),
-                                    ),
-                                    SizedBox(width: 16),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                        SizedBox(height: 4),
-                                        Text('${item['stock']} sacks'),
-                                        SizedBox(height: 4),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                          decoration: BoxDecoration(
-                                            color: getBadgeColor(status),
-                                            borderRadius: BorderRadius.circular(8),
-                                          ),
-                                          child: Text(status, style: TextStyle(fontSize: 12)),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Tooltip(
-                                      message: 'Edit Brand',
-                                      child: IconButton(
-                                        icon: Icon(Icons.edit, color: Colors.green),
-                                        onPressed: () => _showEditForm(context, index),
-                                      ),
-                                    ),
-                                    Tooltip(
-                                      message: 'Delete Brand',
-                                      child: IconButton(
-                                        icon: Icon(Icons.delete, color: Colors.redAccent),
-                                        onPressed: () => _deleteBrand(index),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                            Row(
+                            children: [
+                            Container(
+                            padding: EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.green.shade50,
+                              borderRadius: BorderRadius.circular(12),
                             ),
+                            child: getIcon(),
                           ),
+                          SizedBox(width: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(item['name'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                              SizedBox(height: 4),
+                              Text('${item['stock']} sacks'),
+                              SizedBox(height: 4),
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: getBadgeColor(status),
+                                  borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Text(status, style: TextStyle(fontSize: 12)),
+                                ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Tooltip(
+                                message: 'Edit Brand',
+                                child: IconButton(
+                                  icon: Icon(Icons.edit, color: Colors.green),
+                                  onPressed: () => _showEditForm(context, index),
+                                ),
+                              ),
+                              Tooltip(
+                                message: 'Delete Brand',
+                                child: IconButton(
+                                  icon: Icon(Icons.delete, color: Colors.redAccent),
+                                  onPressed: () => _deleteBrand(index),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ],
                         ),
+                      ),
+                      ),
                       );
                     },
                   ),
