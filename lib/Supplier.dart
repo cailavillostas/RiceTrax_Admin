@@ -4,6 +4,7 @@ import 'Inventory.dart';
 import 'NotificationsPage.dart';
 import 'RiceStock.dart';
 
+
 class SupplierPage extends StatefulWidget {
   @override
   _SupplierPageState createState() => _SupplierPageState();
