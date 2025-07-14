@@ -140,6 +140,7 @@ class NotificationsPage extends StatelessWidget {
     );
   }
 
+
   Widget _buildDrawerItem({
     required IconData icon,
     required String title,
