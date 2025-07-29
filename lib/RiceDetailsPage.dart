@@ -9,7 +9,7 @@ class RiceDetailsPage extends StatelessWidget {
     super.key,
     required this.brandName,
     required this.stock,
-    required this.status,
+    required this.status, required Map<String, dynamic> rice,
   });
 
   Color getBadgeColor(String status) {

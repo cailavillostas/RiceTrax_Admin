@@ -25,6 +25,14 @@ class NotificationsPage extends StatelessWidget {
       'message': 'Extra Brand is Out of Stock',
       'datetime': '2025-07-11   03:25 PM'
     },
+    {
+      'message': 'Premium Rice is In Stock',
+      'datetime': '2025-07-10   10:20 AM'
+    },
+    {
+      'message': 'Organic Rice is In Stock',
+      'datetime': '2025-07-09   02:15 PM'
+    },
   ];
 
   @override
@@ -121,13 +129,26 @@ class NotificationsPage extends StatelessWidget {
                 itemCount: notifications.length,
                 itemBuilder: (context, index) {
                   final item = notifications[index];
+                  final message = item['message'] ?? '';
+                  final datetime = item['datetime'] ?? '';
+
+                  Color? cardColor;
+                  if (message.contains('Out of Stock')) {
+                    cardColor = Colors.red[100];
+                  } else if (message.contains('Low Stock')) {
+                    cardColor = Colors.yellow[100];
+                  } else if (message.contains('In Stock')) {
+                    cardColor = Colors.green[100];
+                  }
+
                   return Card(
+                    color: cardColor,
                     margin: EdgeInsets.only(bottom: 16),
                     child: ListTile(
                       leading: Icon(Icons.notifications_active,
                           color: Colors.green[800]),
-                      title: Text(item['message'] ?? ''),
-                      subtitle: Text(item['datetime'] ?? '',
+                      title: Text(message),
+                      subtitle: Text(datetime,
                           style: TextStyle(color: Colors.grey[600])),
                     ),
                   );
@@ -139,7 +160,6 @@ class NotificationsPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildDrawerItem({
     required IconData icon,
