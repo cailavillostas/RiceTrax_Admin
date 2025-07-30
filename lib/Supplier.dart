@@ -390,6 +390,7 @@ class _SupplierPageState extends State<SupplierPage> {
                     DataColumn(label: Text('Total Cost (₱)', style: TextStyle(fontWeight: FontWeight.bold))),
                     DataColumn(label: Text('Actions', style: TextStyle(fontWeight: FontWeight.bold))),
                   ],
+
                   rows: List.generate(batchData.length, (index) => _buildDataRow(index, batchData[index])),
                 ),
               ),
