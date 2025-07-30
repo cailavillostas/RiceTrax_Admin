@@ -36,7 +36,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('RiceTrax',
+                    Text('RiceTraX',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -75,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.green[800],
-        title: Text('RiceTrax',
+        title: Text('RiceTraX',
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         leading: Builder(
           builder: (context) => IconButton(

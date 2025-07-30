@@ -49,7 +49,7 @@ class NotificationsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('RiceTrax',
+                    Text('RiceTraX',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -106,7 +106,7 @@ class NotificationsPage extends StatelessWidget {
       ),
       appBar: AppBar(
         backgroundColor: Colors.green[800],
-        title: Text('RiceTrax',
+        title: Text('RiceTraX',
             style:
             TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         leading: Builder(

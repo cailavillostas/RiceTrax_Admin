@@ -50,7 +50,7 @@ class RiceStock extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'RiceTrax',
+                      'RiceTraX',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,

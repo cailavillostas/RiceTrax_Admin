@@ -241,7 +241,7 @@ class _InventoryState extends State<Inventory> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('RiceTrax', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+                    Text('RiceTraX', style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
                     Icon(Icons.menu, color: Colors.white),
                   ],
                 ),
@@ -276,7 +276,7 @@ class _InventoryState extends State<Inventory> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.green[800],
-        title: Text('RiceTrax', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text('RiceTraX', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         leading: Builder(
           builder: (context) => IconButton(
             icon: Icon(Icons.menu, color: Colors.white),
